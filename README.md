@@ -6,17 +6,7 @@ Swipe right for laughs, left for meh! Memeder is a Tinder-like application for m
 
 Memeder combines the addictive swiping mechanism of dating apps with the endless entertainment of memes. Users can swipe through a curated collection of memes, build their personal collection of favorites, and discover new content tailored to their humor preferences.
 
-### Key Features
-
-- 👆 **Swipe Interface** - Intuitive Tinder-like swiping for memes
-- 🔐 **User Authentication** - Secure JWT-based login and registration
-- ❤️ **Personal Collection** - Save and organize your favorite memes
-- 📱 **Responsive Design** - Works seamlessly on all devices
-- 🎯 **Smart Recommendations** - Algorithm-based meme suggestions
-- 🚀 **Real-time Interactions** - Instant like/dislike tracking
-
 ## 🏗️ Tech Stack
-
 ### Frontend
 - **React.js** - Modern UI library with hooks
 - **React Router** - Client-side routing
@@ -97,7 +87,7 @@ Open your browser and visit [http://localhost:5173](http://localhost:5173) to st
 ```
 memeder/
 ├── README.md                 # This file
-├── .gitignore               # Git ignore rules
+├
 ├── frontend/                # React frontend application
 │   ├── src/
 │   │   ├── components/      # Reusable UI components
@@ -105,9 +95,11 @@ memeder/
 │   │   ├── assets/         # Static assets
 │   │   └── ...
 │   ├── public/             # Public assets
+|   |── .gitignore          # Git ignore rules
 │   ├── package.json        # Frontend dependencies
 │   └── README.md           # Frontend-specific documentation
 └── backend/                # Express backend API
+    |── .gitignore          # Git ignore rules
     ├── routes/             # API route handlers
     ├── models/             # Database models
     ├── middleware/         # Custom middleware
