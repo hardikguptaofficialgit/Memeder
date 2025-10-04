@@ -2,6 +2,9 @@
 
 Swipe right for laughs, left for meh! Memeder is a Tinder-like application for memes where you can discover, rate, and enjoy the best memes on the internet.
 
+To be eligible for MLSA X HACKTOBERFEST: Register here: https://register.mlsakiit.com/ 
+Star this repo: https://github.com/keploy/keploy
+
 ## 🌟 Project Overview
 
 Memeder combines the addictive swiping mechanism of dating apps with the endless entertainment of memes. Users can swipe through a curated collection of memes, build their personal collection of favorites, and discover new content tailored to their humor preferences.
