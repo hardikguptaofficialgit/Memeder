@@ -1,14 +1,12 @@
-import { Routes, Route, Link } from 'react-router'
+import { Routes, Route } from 'react-router'
+import Navbar from './components/Navbar'
 import Home from './pages/Home'
 import About from './pages/About'
 
 function App() {
   return (
-    <div>
-      <nav className='flex gap-3 justify-center items-center bg-amber-700 p-3'>
-        <Link to="/">Home</Link>
-        <Link to="/about">About</Link>
-      </nav>
+    <div className="min-h-screen bg-white">
+      <Navbar />
 
       <Routes>
         <Route index element={<Home />} />
