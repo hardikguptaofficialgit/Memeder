@@ -31,10 +31,14 @@ export default function Navbar() {
           {/* Auth Buttons */}
           <div className="flex items-center space-x-3">
             <Button variant="ghost">
-              Log In
+              <Link to="/login" className="text-zinc-600 hover:text-zinc-900 transition-colors">
+                Log In
+              </Link>
             </Button>
             <Button>
-              Sign Up
+              <Link to="/register" >
+                Sign Up
+              </Link>
             </Button>
           </div>
         </div>
