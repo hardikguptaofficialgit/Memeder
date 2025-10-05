@@ -20,6 +20,12 @@ export default function Navbar() {
             <Link to="/about" className="text-zinc-600 hover:text-zinc-900 transition-colors">
               About
             </Link>
+            <Link to="/liked" className="text-zinc-600 hover:text-zinc-900 transition-colors">
+              Liked
+            </Link>
+            <Link to="/disliked" className="text-zinc-600 hover:text-zinc-900 transition-colors">
+              Disliked
+            </Link>
           </div>
 
           {/* Auth Buttons */}
