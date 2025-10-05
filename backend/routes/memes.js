@@ -12,4 +12,24 @@ router.get('/', authMiddleware, async (req, res, next) => {
 });
 
 
+// Get liked memes
+router.get('/liked', authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).populate('likedMemes');
+    res.json(user.likedMemes);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Get disliked memes
+router.get('/disliked', authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).populate('dislikedMemes');
+    res.json(user.dislikedMemes);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 module.exports = router;
