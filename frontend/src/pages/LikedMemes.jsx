@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 
 const LikedMemes = () => {
   const [likedMemes, setLikedMemes] = useState([]);
@@ -12,11 +11,16 @@ const LikedMemes = () => {
 
   const fetchLikedMemes = async () => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:3000/api/memes/liked', {
-        headers: { Authorization: `Bearer ${token}` }
+      // REMOVED: const token = localStorage.getItem('token');
+      const response = await fetch('http://localhost:3000/api/memes/liked', {
+        // REMOVED: Authorization header
+        credentials: 'include' // ADDED: Use cookies for auth
       });
-      setLikedMemes(response.data);
+      
+      if (!response.ok) throw new Error('Failed to fetch');
+      
+      const data = await response.json();
+      setLikedMemes(data);
       setLoading(false);
     } catch (err) {
       setError('Failed to load liked memes');

@@ -24,11 +24,12 @@ const Signup = () => {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:3000/api/auth/register', {
+      const response = await fetch('http://localhost:3000/api/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
+        credentials: 'include', // ADDED: Allow cookies
         body: JSON.stringify(formData)
       });
 
@@ -38,8 +39,8 @@ const Signup = () => {
         throw new Error(data.message || 'Signup failed');
       }
 
-      // Store token and user data
-      localStorage.setItem('token', data.token);
+      // REMOVED: localStorage.setItem('token', data.token);
+      // Store only user data (cookie handles auth)
       localStorage.setItem('user', JSON.stringify(data.user));
 
       // Redirect to home/dashboard

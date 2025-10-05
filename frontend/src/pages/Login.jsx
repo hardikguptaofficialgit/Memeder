@@ -28,6 +28,7 @@ const Login = () => {
         headers: {
           'Content-Type': 'application/json'
         },
+        credentials: 'include', // ADDED: Allow cookies
         body: JSON.stringify(formData)
       });
 
@@ -37,8 +38,8 @@ const Login = () => {
         throw new Error(data.message || 'Login failed');
       }
 
-      // Store token and user data
-      localStorage.setItem('token', data.token);
+      // REMOVED: localStorage.setItem('token', data.token);
+      // Store only user data (cookie handles auth)
       localStorage.setItem('user', JSON.stringify(data.user));
 
       // Redirect to home/dashboard
@@ -103,7 +104,7 @@ const Login = () => {
 
         <p className="text-center text-gray-600 mt-4">
           Don't have an account?{' '}
-          <Link to="/register" className="text-blue-500 hover:underline">
+          <Link to="/signup" className="text-blue-500 hover:underline">
             Sign Up
           </Link>
         </p>
