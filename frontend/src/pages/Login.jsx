@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
 const Login = () => {
@@ -7,45 +7,106 @@ const Login = () => {
     password: ''
   });
   const [error, setError] = useState('');
+  const [fieldErrors, setFieldErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [pendingSignup, setPendingSignup] = useState(null);
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
+    // clear field-level error on change
+    setFieldErrors((prev) => ({ ...prev, [e.target.name]: '' }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
+    setFieldErrors({});
 
+    // client-side validation
+    const errors = {};
+    if (!formData.email) {
+      errors.email = 'Email is required';
+    } else {
+      const emailRe = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\\.,;:\s@\"]+\.)+[^<>()[\]\\.,;:\s@\"]{2,})$/i;
+      if (!emailRe.test(formData.email)) {
+        errors.email = 'Please enter a valid email address';
+      }
+    }
+    if (!formData.password) {
+      errors.password = 'Password is required';
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      setLoading(false);
+      return;
+    }
+
+    try {
+      await performLogin({ email: formData.email, password: formData.password });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Reusable login fetch logic so other flows (like using pendingSignup) can call it
+  const performLogin = async ({ email, password }) => {
+    setError('');
+    setLoading(true);
     try {
       const response = await fetch('http://localhost:3000/api/auth/login', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        credentials: 'include', // ADDED: Allow cookies
-        body: JSON.stringify(formData)
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ email, password })
       });
 
       const data = await response.json();
-
       if (!response.ok) {
-        throw new Error(data.message || 'Login failed');
+        throw new Error(data.message || 'Invalid email or password');
       }
-
-      // REMOVED: localStorage.setItem('token', data.token);
-      // Store only user data (cookie handles auth)
       localStorage.setItem('user', JSON.stringify(data.user));
-
-      // Redirect to home/dashboard
+      // If login succeeds and there was a pending signup, clear it
+      try {
+        const raw = localStorage.getItem('pendingSignup');
+        if (raw) localStorage.removeItem('pendingSignup');
+      } catch (e) {
+        // ignore
+      }
       navigate('/');
     } catch (err) {
-      setError(err.message);
+      const msg = /invalid|failed|password|credentials/i.test(err.message)
+        ? 'Invalid email or password'
+        : err.message;
+      setError(msg);
+      throw err;
+    }
+  };
+
+  // Load pending signup from localStorage if present
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem('pendingSignup');
+      if (raw) setPendingSignup(JSON.parse(raw));
+    } catch (err) {
+      // ignore
+    }
+  }, []);
+
+  const usePendingSignup = async () => {
+    if (!pendingSignup) return;
+    setFieldErrors({});
+    setError('Attempting login with locally saved signup credentials...');
+    try {
+      await performLogin({ email: pendingSignup.email || '', password: pendingSignup.password || '' });
+    } catch (err) {
+      // performLogin will set the error message
     } finally {
       setLoading(false);
     }
@@ -62,10 +123,10 @@ const Login = () => {
           </div>
         )}
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} noValidate>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
-              Email
+              Email <span className="text-red-500">*</span>
             </label>
             <input
               type="email"
@@ -76,14 +137,17 @@ const Login = () => {
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
+            {fieldErrors.email && (
+              <p className="text-red-600 text-sm mt-1">{fieldErrors.email}</p>
+            )}
           </div>
 
-          <div className="mb-6">
+          <div className="mb-6 relative">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
-              Password
+              Password <span className="text-red-500">*</span>
             </label>
             <input
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               id="password"
               name="password"
               value={formData.password}
@@ -91,6 +155,21 @@ const Login = () => {
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
+            <button
+              type="button"
+              onClick={() => setShowPassword((s) => !s)}
+              className="absolute right-3 top-9 text-gray-600"
+              aria-label={showPassword ? 'Hide password' : 'Show password'}
+            >
+              {showPassword ? '🙈' : '👁'}
+            </button>
+            {fieldErrors.password && (
+              <p className="text-red-600 text-sm mt-1">{fieldErrors.password}</p>
+            )}
+          </div>
+
+          <div className="text-right mb-4">
+            <a href="/forgot-password" className="text-sm text-blue-500 hover:underline">Forgot Password?</a>
           </div>
 
           <button
@@ -102,11 +181,26 @@ const Login = () => {
           </button>
         </form>
 
+        {pendingSignup && (
+          <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded">
+            <p className="text-sm text-yellow-800">A signup attempt was saved locally (offline). You can use those credentials to login:</p>
+            <p className="text-xs text-gray-600 mt-1">(Stored locally for convenience — storing plaintext passwords is insecure; consider discarding after use.)</p>
+            <div className="mt-2 flex gap-2">
+              <button onClick={usePendingSignup} className="text-sm text-blue-500 hover:underline bg-transparent border-0 p-0">Use saved signup</button>
+              <button onClick={() => { localStorage.removeItem('pendingSignup'); setPendingSignup(null); }} className="text-sm text-red-500 hover:underline bg-transparent border-0 p-0">Discard</button>
+            </div>
+          </div>
+        )}
+
         <p className="text-center text-gray-600 mt-4">
           Don't have an account?{' '}
-          <Link to="/signup" className="text-blue-500 hover:underline">
+          <button
+            type="button"
+            onClick={() => navigate('/register')}
+            className="text-blue-500 hover:underline bg-transparent border-0 p-0"
+          >
             Sign Up
-          </Link>
+          </button>
         </p>
       </div>
     </div>
