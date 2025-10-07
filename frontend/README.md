@@ -1,126 +1,76 @@
-# Memeder
+# Memeder 🎭
 
 Swipe right for laughs, left for meh! Memeder is a Tinder-like application for memes where you can discover, rate, and enjoy the best memes on the internet.
 
 ## Tech Stack
 
-- **React.js** - Frontend library for building user interfaces
-- **React Router** - Client-side routing for navigation
-- **CSS3** - Styling and animations
-- **JavaScript** - Core programming language
+- Frontend: React, React Router, Vite, Tailwind CSS
+- Backend: Node.js, Express, MongoDB (Mongoose), JWT
 
-## 🛠️ Getting Started
+## Getting started (quick)
 
-### Prerequisites
-
-Make sure you have the following installed:
-- Node.js (v14 or higher)
+Prerequisites:
+- Node.js (v14+)
 - npm or yarn
 
-### Installation
-
 1. Clone the repository
+
 ```bash
-git clone https://github.com/yourusername/memeder.git
+git clone https://github.com/MLSAKIIT/memeder.git
 cd memeder
 ```
 
-2. Install dependencies
+2. Install and run backend
+
 ```bash
+cd backend
 npm install
-# or
-yarn install
-```
-
-3. Start the development server
-```bash
+cp .env.example .env
+# Edit .env with your config, then:
 npm run dev
-# or
-yarn dev
 ```
 
-4. Open [http://localhost:5173](http://localhost:5173) in your browser to see the application
+3. Install and run frontend
 
-The page will automatically reload when you make changes to the code.
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-## Features
+Open the frontend at the URL Vite reports (usually http://localhost:5173).
 
-- 👆 Swipe right to like memes, left to pass
-- ❤️ View your liked memes collection
-- 🎨 Smooth animations and transitions
-- 📱 Responsive design for all devices
-- ⚡ Fast and lightweight
+## Project Structure
+
+High level:
+
+```
+memeder/
+├── frontend/    # React application (this README)
+├── backend/     # Express API
+└── README.md    # Root project README
+```
 
 ## Contributing
 
-We welcome contributions! Here's how you can help:
+1. Fork the repository
+2. Create a feature branch: `git switch -C feature/your-feature`
+3. Make your changes, commit, and push
+4. Open a Pull Request
 
-### How to Create a Pull Request
+Commit message prefixes (recommended): Add:, Fix:, Update:, Docs:
 
-1. **Fork the Repository**
-   - Click the "Fork" button at the top right of this repository
-   - This creates a copy of the repository in your GitHub account
+## Deployment
 
-2. **Clone Your Fork**
-   ```bash
-   git clone https://github.com/YOUR-USERNAME/memeder.git
-   cd memeder
-   ```
+- Frontend: Vercel, Netlify, or similar
+- Backend: Railway, Heroku, or similar
 
-3. **Create a New Branch**
-   ```bash
-   git switch -C feature/your-feature-name
-   # or
-   git switch -C fix/your-bug-fix
-   ```
+## Notes
 
-4. **Make Your Changes**
-   - Write clean, readable code
-   - Follow the existing code style
-   - Test your changes thoroughly
+- This frontend includes dev scripts (vite) and linting. Ensure you run `npm install` before starting.
+- For production, ensure environment variables (e.g., `MONGODB_URI`, `JWT_SECRET`) are set on the server.
 
-5. **Commit Your Changes**
-   ```bash
-   git add .
-   git commit -m "Add: brief description of your changes"
-   ```
-   
-   Commit message prefixes:
-   - `Add:` for new features
-   - `Fix:` for bug fixes
-   - `Update:` for updates to existing features
-   - `Docs:` for documentation changes
-
-6. **Push to Your Fork**
-   ```bash
-   git push origin feature/your-feature-name
-   ```
-
-7. **Create Pull Request**
-   - Go to your fork on GitHub
-   - Click "Compare & pull request"
-   - Add a clear title and description
-   - Submit the pull request
-
-### Contribution Guidelines
-
-- Ensure your code follows the project's coding standards
-- Write meaningful commit messages
-- Update documentation if needed
-- Test your changes before submitting
-- Be respectful and constructive in discussions
-
-## Learn More
-
-To learn more about the technologies used in this project:
-
-- [React Documentation](https://react.dev/) - Learn about React features and API
-- [React Router Documentation](https://reactrouter.com/) - Learn about client-side routing
-- [JavaScript MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript) - Comprehensive JavaScript guide
-
-## Available Scripts
-
-### `npm run dev`
+Happy Swiping! 🎭✨
 Runs the app in development mode at [http://localhost:5173](http://localhost:5173)
 
 ### `npm run build`
