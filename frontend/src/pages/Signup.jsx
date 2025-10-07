@@ -131,7 +131,7 @@ const Signup = () => {
 
   // helper to test password rules for live UI
   const passwordRules = {
-    length: (pw) => pw.length >= 12,
+    length: (pw) => pw.length >= 8,
     upper: (pw) => /[A-Z]/.test(pw),
     lower: (pw) => /[a-z]/.test(pw),
     number: (pw) => /\d/.test(pw),
@@ -249,7 +249,7 @@ const Signup = () => {
             {/* Password rules live checklist */}
             <ul className="mt-2 text-sm">
               <li className={passwordRules.length(formData.password) ? 'text-green-600' : 'text-gray-600'}>
-                {passwordRules.length(formData.password) ? '✓' : '○'} At least 12 characters
+                {passwordRules.length(formData.password) ? '✓' : '○'} At least 8 characters
               </li>
               <li className={passwordRules.upper(formData.password) ? 'text-green-600' : 'text-gray-600'}>
                 {passwordRules.upper(formData.password) ? '✓' : '○'} Contains an uppercase letter
