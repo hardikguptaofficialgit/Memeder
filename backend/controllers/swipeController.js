@@ -11,7 +11,7 @@ const swipeMeme = async (req, res) => {
 
   try {
     if (direction != "left" &&  direction != "right")
-      res.status(400).json({ status: "Invalid direction.Swipe left or right" });
+       return res.status(400).json({ status: "Invalid direction.Swipe left or right" });
 
     const meme = await Meme.findById(memeId);
     if (!meme || !meme.isActive) {
@@ -20,7 +20,7 @@ const swipeMeme = async (req, res) => {
 
     const duplicateSwipe = await Swipe.findOne({ user: userId, meme: memeId });
     if (duplicateSwipe) {
-      res.status(400).json({ status: "already swiped" });
+     return  res.status(400).json({ status: "already swiped" });
     }
 
     const swipe = await Swipe.create({
@@ -38,7 +38,7 @@ const swipeMeme = async (req, res) => {
 
     await meme.save();
 
-    res.status(201).json({
+    return res.status(201).json({
       status: "Swipe recorded successfully",
       swipe,
       updatedMeme: {

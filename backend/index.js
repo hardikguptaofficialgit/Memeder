@@ -35,7 +35,7 @@ app.get('/', (req, res) => {
 // API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/memes', memeRoutes);
-app.use('/api/memes',swipeRoutes);
+app.use('/api/swipes',swipeRoutes);
 
 // Error handling middleware
 app.use(notFound);
