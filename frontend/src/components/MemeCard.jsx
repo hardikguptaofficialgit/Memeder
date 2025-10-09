@@ -21,15 +21,20 @@ export default function MemeCard({ meme, fit = "cover" }) {
         className="relative w-full overflow-hidden rounded-t-xl bg-zinc-50"
         style={{ aspectRatio: "4 / 5" }}
       >
+        {/* Skeleton while loading */}
         {!isLoaded && !isError && (
           <div className="absolute inset-0 animate-pulse bg-zinc-100" aria-hidden="true" />
         )}
+
+        {/* Error state */}
         {isError && (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-zinc-500">
             <span className="text-3xl">🖼️</span>
             <p className="text-sm">Image failed to load</p>
           </div>
         )}
+
+        {/* Actual image */}
         {!isError && (
           <img
             src={imageUrl}
@@ -45,6 +50,8 @@ export default function MemeCard({ meme, fit = "cover" }) {
           />
         )}
       </div>
+
+      {/* Content */}
       <div className="p-4">
         {title && (
           <h3 className="text-lg font-semibold text-zinc-900 tracking-tight line-clamp-1">{title}</h3>
@@ -55,6 +62,8 @@ export default function MemeCard({ meme, fit = "cover" }) {
             {description}
           </p>
         )}
+
+        {/* Tags */}
         {Array.isArray(tags) && tags.length > 0 && (
           <div className="mt-3 flex flex-wrap gap-2">
             {tags.map((tag) => (
