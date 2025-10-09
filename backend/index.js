@@ -6,6 +6,7 @@ const cors = require('cors');
 // Import routes
 const authRoutes = require('./routes/auth');
 const memeRoutes = require('./routes/memes');
+const swipeRoutes=require('./routes/swipeRoutes');
 
 // Import middleware
 const { errorHandler, notFound } = require('./middleware/errorHandler');
@@ -34,6 +35,7 @@ app.get('/', (req, res) => {
 // API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/memes', memeRoutes);
+app.use('/api/memes',swipeRoutes);
 
 // Error handling middleware
 app.use(notFound);
