@@ -26,10 +26,6 @@ export default function Navbar() {
             <Link to="/disliked" className="text-zinc-600 hover:text-zinc-900 transition-colors">
               Disliked
             </Link>
-            <Link to="/add-meme" className="text-zinc-600 hover:text-zinc-900 transition-colors flex items-center gap-2">
-              <span aria-hidden="true" className="inline-flex items-center justify-center w-5 h-5 rounded">
-              </span>Add Meme
-            </Link>
           </div>
 
           {/* Auth Buttons */}

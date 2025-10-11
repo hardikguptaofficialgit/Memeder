@@ -77,50 +77,13 @@ export default function MemeCard({ meme, fit = "cover" }) {
           </div>
         )}
       </div>
-      
-      <div
-        className="pointer-events-none absolute inset-0 rounded-xl opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+      <div className="pointer-events-none absolute inset-0 rounded-xl opacity-0 transition-opacity duration-200 group-hover:opacity-100"
         aria-hidden="true"
         style={{
           background:
             "radial-gradient(80% 60% at 50% 0%, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0) 100%)",
         }}
-      >
-        <div className="absolute top-2 right-2 flex gap-2">
-          {/* Update button */}
-          <button
-            type="button"
-            className="pointer-events-auto inline-flex items-center gap-1 rounded-md bg-white/90 px-2 py-1 text-xs font-medium text-zinc-800 shadow-sm ring-1 ring-zinc-200 hover:bg-white"
-            title="Update meme"
-            onClick={(e) => e.preventDefault()}
-          >
-            
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4" aria-hidden="true">
-              <path d="M12 20h9" />
-              <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z" />
-            </svg>
-            Update
-          </button>
-
-          {/* Delete button */}
-          <button
-            type="button"
-            className="pointer-events-auto inline-flex items-center gap-1 rounded-md bg-white/90 px-2 py-1 text-xs font-medium text-red-600 shadow-sm ring-1 ring-red-200 hover:bg-white"
-            title="Delete meme"
-            onClick={(e) => e.preventDefault()}
-          >
-            
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4" aria-hidden="true">
-              <path d="M3 6h18" />
-              <path d="M8 6v-2a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-              <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
-              <path d="M10 11v6" />
-              <path d="M14 11v6" />
-            </svg>
-            Delete
-          </button>
-        </div>
-      </div>
+      />
     </article>
   )
 }
