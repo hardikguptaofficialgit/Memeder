@@ -1,6 +1,17 @@
 import { Button } from '../components/Button'
+import MemeCard from '../components/MemeCard'
 
 export default function Home() {
+    const demoMemes = [
+    
+    {
+      id: '789ghi',
+      title: 'Morning Struggles',
+      imageUrl: 'https://i.chzbgr.com/full/10412088576/hC8DE5C75/every-morning-deciding-if-really-need-this-education',
+      description: '“Me every morning deciding if I really need this education” — capturing that feeling of self-doubt or questioning the purpose of schooling.',
+      tags: ['college', 'relatable', 'education'],
+    },
+  ]
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
@@ -25,14 +36,10 @@ export default function Home() {
 
         {/* Placeholder for Meme Cards */}
         <div className="mt-20">
-          <div className="max-w-md mx-auto border border-zinc-200 rounded-lg p-8 text-center bg-zinc-50">
-            <div className="text-6xl mb-4">🎭</div>
-            <h3 className="text-lg font-medium text-zinc-900 mb-2">
-              Meme cards will appear here
-            </h3>
-            <p className="text-zinc-600">
-              Contributors can implement the swipeable meme card component
-            </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 place-items-center">
+            {demoMemes.map((meme) => (
+              <MemeCard key={meme.id} meme={meme} fit="contain" />
+            ))}
           </div>
         </div>
       </div>
