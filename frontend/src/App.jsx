@@ -6,6 +6,7 @@ import LikedMemes from './pages/LikedMemes';
 import DislikedMemes from './pages/DislikedMemes';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import AddMeme from './pages/AddMeme';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="about" element={<About />} />
         <Route path="/liked" element={<LikedMemes />} />
         <Route path="/disliked" element={<DislikedMemes />} />
+        <Route path="/add" element={<AddMeme />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Signup />} />
       </Routes>

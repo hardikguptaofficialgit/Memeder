@@ -27,6 +27,42 @@ router.put('/:id', authMiddleware, upload.single('image'), validateUpdatedMeme, 
 // @route   DELETE /api/memes/:id
 // @desc    Delete a meme
 router.delete('/:id', authMiddleware, deleteMeme);
+// @route  POST /api/memes/addmeme
+// @desc   Add a new meme
+router.post('/addmeme', authMiddleware, async (req, res) => {
+  const { title, imageUrl, description, tags } = req.body;
+
+  if (!title || !imageUrl) {
+    return res.status(400).json({ message: 'Title and Image URL are required' });
+  }
+
+  try {
+    const newMeme = new Meme({
+      title,
+      imageUrl,
+      description,
+      tags: tags ? tags.split(',').map(tag => tag.trim()) : [],
+      createdBy: req.user.id,
+    });
+
+    await newMeme.save();
+    res.status(201).json(newMeme);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// @route  GET /api/memes/mine
+// @desc   Get memes added by the logged-in user
+router.get('/mine', authMiddleware, async (req, res) => {
+  try {
+    const memes = await Meme.find({ createdBy: req.user.id });
+    res.json(memes);
+  }
+  catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 
 // Get liked memes
 router.get('/liked', authMiddleware, async (req, res) => {
