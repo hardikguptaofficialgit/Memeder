@@ -2,15 +2,31 @@ const express = require('express');
 const Meme = require('../models/Meme');
 const User = require('../models/User');
 const authMiddleware = require('../middleware/auth');
+const upload = require('../middleware/upload');
+const { validateMemeUpload, validateUpdatedMeme } = require('../middleware/validation');
+const { createMeme, getMemesById, updateMeme, deleteMeme, getRandomMemes } = require('../controllers/memeController');
 
 const router = express.Router();
 
 // @route   GET /api/memes
 // @desc    Get random memes for swiping (excluding already swiped)
-router.get('/', authMiddleware, async (req, res, next) => {
-    res.json('This is a placeholder response for GET /api/memes');
-});
+router.get('/', authMiddleware, getRandomMemes);
 
+// @route   POST /api/memes
+// @desc    Add a new meme
+router.post('/create', authMiddleware, upload.single('image'), validateMemeUpload, createMeme);
+
+// @route   GET /api/memes/:id
+// @desc    Get meme by ID
+router.get('/:id', authMiddleware, getMemesById);
+
+// @route  PUT /api/memes/:id
+// @desc   Update a meme
+router.put('/:id', authMiddleware, upload.single('image'), validateUpdatedMeme, updateMeme);
+
+// @route   DELETE /api/memes/:id
+// @desc    Delete a meme
+router.delete('/:id', authMiddleware, deleteMeme);
 // @route  POST /api/memes/addmeme
 // @desc   Add a new meme
 router.post('/addmeme', authMiddleware, async (req, res) => {
